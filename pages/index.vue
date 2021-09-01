@@ -1,43 +1,53 @@
 <template>
     <div id="container">
         <header id="header" class="has-shadow">
-            <div class="level">
+            <div class="level is-mobile">
                 <div class="level-left">
-                    Left
+                    <div class="buttons is-pulled-left">
+                        <button class="button is-white" title="انتخاب فصل">
+                            <span class="icon"><i class="mdi mdi-format-list-checkbox" /></span>
+                        </button>
+                    </div>
                 </div>
                 <div class="level-item">
                     <h1 class="title is-6">شاهنامه فردوسی</h1>
                 </div>
                 <div class="level-right">
-                    Right
+                    <div class="buttons is-pulled-left">
+                        <button class="button is-white" title="جستجو در متن">
+                            <span class="icon"><i class="mdi mdi-magnify" /></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </header>
-        <aside id="sidebar" class="has-shadow is-hidden">Sidebar</aside>
-        <main id="content" :class="{'has-contents': hemistiches.length}">
-            <p v-if="$fetchState.pending" class="has-text-centered">
-                <i class="mdi mdi-loading mdi-spin mdi-48px"></i>
-            </p>
-            <template v-else>
-                <div v-for="(hemistich, index) in hemistiches" :key="index" class="hemistich">
-                    {{ hemistich }}
-                </div>
-            </template>
-        </main>
+        <the-viewer :hemistiches="selectedHemistiches" :is-loading="$fetchState.pending" />
     </div>
 </template>
 
 <script>
+import TheViewer from '@/components/TheViewer'
+
 export default {
+    components: {TheViewer},
     data() {
         return {
+            hemistiches: [],
             chapters: [],
-            hemistiches: []
+            start: null,
+            end: null,
         }
     },
     async fetch() {
         this.chapters = await this.$axios.$get('data/chapters.json')
         this.hemistiches = await this.$axios.$get('data/hemistiches.json')
+    },
+    computed: {
+        selectedHemistiches() {
+            const start = this.start || 0
+            const end = this.end || this.hemistiches.length
+            return this.hemistiches.slice(start, end)
+        }
     },
     fetchOnServer: false
 }

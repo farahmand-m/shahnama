@@ -1,56 +1,104 @@
 html, body {
     direction: rtl;
-    overflow: auto;
+    overflow: hidden;
     background: white;
 }
 
 #__nuxt, #__layout {
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
 }
 
-#header {
-    position: fixed;
+#container {
+    position: absolute;
     top: 0;
-    left: 0;
     right: 0;
-    padding: 1em;
-    background: white;
-    user-select: none;
-}
-
-#sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
     bottom: 0;
-    width: 100%;
-    max-width: 320px;
-    background: white;
-    user-select: none;
-}
+    left: 0;
+    display: flex;
+    flex-direction: column;
 
-#content {
-    margin-top: 4em;
-    padding: 2em;
-
-    &.has-contents {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+    #header {
+        padding: 1em;
+        background: white;
+        user-select: none;
     }
 
-    .hemistich {
-        padding: 1em;
+    #content {
+        flex-grow: 1;
+        overflow-y: auto;
+        -ms-overflow-style: none;  // IE and Edge
+        scrollbar-width: none;  // Firefox
+        padding-top: 2em;  // Bottom padding does not mix well with grid in Chrome.
+        display: grid;
 
-        &:nth-child(odd) {
-            text-align: left;
+        &::-webkit-scrollbar {
+            display: none;  // Chrome, Safari and Opera
         }
 
-        &:nth-child(even) {
-            text-align: right;
+        .hemistich {
+            .is-placeholder {
+                width: 200px;
+                height: 24px;
+            }
+        }
+
+        @media (min-width: 540px) {
+            grid-template-columns: 1fr 1fr;
+
+            .hemistich {
+                padding: 1em;
+
+                &:nth-child(odd) {
+                    text-align: left;
+                }
+
+                &:nth-child(even) {
+                    text-align: right;
+                }
+            }
+        }
+
+        @media (max-width: 540px) {
+            grid-template-columns: 1fr;
+
+            .hemistich {
+                padding: .5em 2em;
+
+                &:nth-child(odd) {
+                    text-align: right;
+                    padding-bottom: 0;
+                }
+
+                &:nth-child(even) {
+                    text-align: left;
+                }
+            }
+        }
+
+        #scroll-tip {
+            position: absolute;
+            bottom: 2em;
+            right: 2em;
+
+            .box {
+                width: 215px;
+                padding: 1em;
+                text-align: justify;
+            }
         }
     }
 }
 
 .has-shadow {
     box-shadow: rgba(0, 0, 0, 0.06) 0 0 40px;
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .5s
+}
+
+.fade-enter, .fade-leave-to {
+    opacity: 0
 }

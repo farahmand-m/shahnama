@@ -15,7 +15,7 @@ export default {
             { name: 'format-detection', content: 'telephone=no' }
         ],
         link: [
-            { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
+            { rel: 'icon', type: 'image/x-icon', href: 'favicon.png' }
         ]
     },
 
@@ -24,7 +24,7 @@ export default {
         '@mdi/font/css/materialdesignicons.min.css',
         '~/assets/stylesheets/vazir.css',
         '~/assets/stylesheets/bundled.scss',
-        '~/assets/stylesheets/app.scss'
+        '~/assets/stylesheets/app.scss',
     ],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
