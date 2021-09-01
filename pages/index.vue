@@ -39,8 +39,8 @@ export default {
         }
     },
     async fetch() {
-        this.chapters = await this.$axios.$get('data/chapters.json')
-        this.hemistiches = await this.$axios.$get('data/hemistiches.json')
+        this.chapters = await this.$axios.$get('https://farahmand-m.github.io/shahnama/data/chapters.json')
+        this.hemistiches = await this.$axios.$get('https://farahmand-m.github.io/shahnama/data/hemistiches.json')
     },
     computed: {
         selectedHemistiches() {
