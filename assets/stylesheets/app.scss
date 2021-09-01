@@ -1,0 +1,56 @@
+html, body {
+    direction: rtl;
+    overflow: auto;
+    background: white;
+}
+
+#__nuxt, #__layout {
+    width: 100%;
+}
+
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 1em;
+    background: white;
+    user-select: none;
+}
+
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 320px;
+    background: white;
+    user-select: none;
+}
+
+#content {
+    margin-top: 4em;
+    padding: 2em;
+
+    &.has-contents {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .hemistich {
+        padding: 1em;
+
+        &:nth-child(odd) {
+            text-align: left;
+        }
+
+        &:nth-child(even) {
+            text-align: right;
+        }
+    }
+}
+
+.has-shadow {
+    box-shadow: rgba(0, 0, 0, 0.06) 0 0 40px;
+}
