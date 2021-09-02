@@ -60,6 +60,7 @@ export default {
         hemistiches() {
             this.start = 0
             this.end = this.inPage
+            this.$refs.content.scrollTo(0, 0)
         }
     },
     mounted() {

@@ -89,6 +89,18 @@ html, body {
             }
         }
     }
+
+    .floating {
+        position: absolute;
+
+        &#chapters {
+            top: 8em;
+            right: 2em;
+            width: 215px;
+            height: 400px;
+            overflow: auto;
+        }
+    }
 }
 
 .has-shadow {
