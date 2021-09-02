@@ -8,7 +8,12 @@
             </div>
         </template>
         <template v-else>
-            <div v-for="(hemistich, index) in shownHemistiches" :key="index" ref="hemistiches" class="hemistich">
+            <div
+                v-for="(hemistich, index) in shownHemistiches"
+                :key="index" ref="hemistiches" class="hemistich"
+                :class="{'is-highlighted': index + start === highlighted, 'is-selected': index + start === selected}"
+                @click="emitSelection(index + start)"
+            >
                 {{ hemistich }}
             </div>
         </template>
@@ -43,6 +48,8 @@ export default {
             start: 0,
             end: this.inPage,
             tipShown: true,
+            selected: null,
+            highlighted: null,
         }
     },
     computed: {
@@ -61,6 +68,7 @@ export default {
             this.start = 0
             this.end = this.inPage
             this.$refs.content.scrollTo(0, 0)
+            this.selected = this.highlighted = null
         }
     },
     mounted() {
@@ -75,14 +83,34 @@ export default {
             if (container.scrollTop + container.clientHeight >= container.scrollHeight)
                 offset = this.end < this.maxEnd ? this.inPage / 2 : 0
             if (offset) {
-                this.start = Math.max(this.start + offset, this.minStart)
-                this.end = Math.min(this.end + offset, this.maxEnd)
+                if (this.start + offset < this.minStart) {
+                    this.start = this.minStart
+                    this.end = this.minStart + this.inPage
+                } else if (this.end + offset > this.maxEnd) {
+                    this.start = this.maxEnd - this.inPage
+                    this.end = this.maxEnd
+                } else {
+                    this.start = this.start + offset
+                    this.end = this.end + offset
+                }
                 anchor = this.$refs.hemistiches[Math.abs(offset) - (offset > 0 ? 1 : -1)].offsetTop
                 sling = this.$refs.hemistiches[offset > 0 ? this.inPage - 1 : 0].offsetTop
                 const offsetTop = container.scrollTop - (sling - anchor)
                 container.scrollTo(0, offsetTop)
             }
-        }
+        },
+        jumpTo(index) {
+            const container = this.$refs.content
+            this.start = (index - this.inPage / 2) >> 1 << 1
+            this.end = (index + this.inPage / 2) >> 1 << 1
+            container.scrollTo(0, this.$refs.hemistiches[index - this.start].offsetTop - container.clientHeight / 2)
+            this.highlighted = index
+        },
+        emitSelection(index) {
+            this.selected = index
+            this.highlighted = null
+            this.$emit('selected', index)
+        },
     }
 }
 </script>

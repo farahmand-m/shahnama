@@ -29,6 +29,7 @@ html, body {
         flex-grow: 1;
         overflow-y: auto;
         -ms-overflow-style: none;  // IE and Edge
+        // noinspection CssUnknownProperty
         scrollbar-width: none;  // Firefox
         padding-top: 2em;  // Bottom padding does not mix well with grid in Chrome.
         display: grid;
@@ -41,6 +42,34 @@ html, body {
             .is-placeholder {
                 width: 200px;
                 height: 24px;
+            }
+
+            &:nth-child(odd) {
+                &.is-highlighted {
+                    border-radius: 1em 0 0 1em;
+                    background: rgb(221,255,67);
+                    background: linear-gradient(90deg, rgba(255,221,129,1) 0%, rgba(255,255,255,0) 100%);
+                }
+
+                &.is-selected {
+                    border-radius: 1em 0 0 1em;
+                    background: rgb(221,255,67);
+                    background: linear-gradient(90deg, rgba(0,0,0,0.2) 0%, rgba(255,255,255,0) 100%);
+                }
+            }
+
+            &:nth-child(even) {
+                &.is-highlighted {
+                    border-radius: 0 1em 1em 0;
+                    background: rgb(221,255,67);
+                    background: linear-gradient(-90deg, rgba(255,221,129,1) 0%, rgba(255,255,255,0) 100%);
+                }
+
+                &.is-selected {
+                    border-radius: 0 1em 1em 0;
+                    background: rgb(221,255,67);
+                    background: linear-gradient(-90deg, rgba(0,0,0,0.2) 0%, rgba(255,255,255,0) 100%);
+                }
             }
         }
 
@@ -92,13 +121,24 @@ html, body {
 
     .floating {
         position: absolute;
+        top: 6em;
+        width: 215px;
 
         &#chapters {
-            top: 8em;
             right: 2em;
-            width: 215px;
             height: 400px;
             overflow: auto;
+        }
+
+        &#search {
+            left: 2em;
+            height: 110px;
+        }
+
+        &#not-found {
+            left: 2em;
+            bottom: 2em;
+            top: initial;
         }
     }
 }
@@ -108,7 +148,7 @@ html, body {
 }
 
 .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s
+    transition: opacity .3s
 }
 
 .fade-enter, .fade-leave-to {
