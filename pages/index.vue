@@ -21,7 +21,7 @@
                 </div>
             </div>
         </header>
-        <the-viewer :hemistiches="selectedHemistiches" :is-loading="$fetchState.pending" />
+        <the-viewer :hemistiches="selectedHemistiches" :is-loading="isLoading" />
     </div>
 </template>
 
@@ -36,11 +36,13 @@ export default {
             chapters: [],
             start: null,
             end: null,
+            isLoading: true,
         }
     },
     async fetch() {
         this.chapters = await this.$axios.$get('https://farahmand-m.github.io/shahnama/data/chapters.json')
         this.hemistiches = await this.$axios.$get('https://farahmand-m.github.io/shahnama/data/hemistiches.json')
+        this.isLoading = false
     },
     computed: {
         selectedHemistiches() {
