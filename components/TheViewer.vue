@@ -1,7 +1,7 @@
 <template>
     <div id="content" ref="content">
         <template v-if="isLoading">
-            <div v-for="index in Array(8)" :key="index" class="hemistich">
+            <div v-for="index in Array(placeholders)" :key="index" class="hemistich">
                 <content-loader width="200" height="24" viewBox="0 0 200 24" class="is-placeholder">
                     <rect x="0" y="0" rx="3" ry="3" width="200" height="24" />
                 </content-loader>
@@ -47,6 +47,7 @@ export default {
         return {
             start: 0,
             end: this.inPage,
+            placeholders: 2,
             tipShown: true,
             selected: null,
             highlighted: null,
@@ -72,6 +73,8 @@ export default {
         }
     },
     mounted() {
+        // Seems a little kick is necessary for the placeholders to show up.
+        this.placeholders = 30
         this.$refs.content.addEventListener('scroll', this.scrolled)
     },
     methods: {
